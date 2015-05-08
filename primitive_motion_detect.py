@@ -32,6 +32,7 @@ def doTheThing():
     last2 = last1.copy()
 
     _time = time.time()
+    _fps = ""
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -41,16 +42,17 @@ def doTheThing():
                                         255, 0), dtype=np.uint8)
 
         if times == times_skip_sample:
-            last1 = (last2 * 0.1 + last1 * 0.2 + frame * 0.7) #average
+            last1 = (last2 * 0.1 + last1 * 0.2 + frame * 0.7)  # average
             last2 = last1.copy()
-            timeAux = time.time()
-            _fps = "%.2f" % (times/(timeAux-_time))
-            _time = timeAux
+            time_aux = time.time()
+            _fps = "%.2f" % (times / (time_aux - _time))
+            _time = time_aux
             times = 0
         else:
             times += 1
 
-        cv2.putText(to_show,'FPS: '+_fps,(40,40), font, 1,(255,255,0),2)
+        cv2.putText(to_show, 'FPS: ' + _fps, (40, 40), font, 1,
+                    (255, 255, 0), 2)
 
         cv2.imshow('frame', to_show)
 
